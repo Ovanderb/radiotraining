@@ -152,6 +152,7 @@ document.addEventListener('mousewheel', function(ev){
 		vol.style.transform = 'rotate(' + ((rotaVol + ONOFF_FACTOR)* step) + 'deg)';
 	}
 });
+
 document.addEventListener('click',function(ev){
 	if(ev.target.id == "speak"){
 		if(rotaOnoff == 16){
