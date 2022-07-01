@@ -1,0 +1,19 @@
+#disp {
+	background-color: yellow;    
+	position: absolute;
+	left: 170px;
+    top: 80px;
+    width: 250px;
+    height: 50px;
+    padding: 4px 20px;
+}
+
+#disp span{
+	font-size:xxx-large;
+}
+
+#imgcont{
+	background-color: #626946;
+	width:110px;
+	padding:5px;
+}
