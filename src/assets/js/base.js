@@ -68,7 +68,6 @@ function onOffMove(direction){
 	} else if(rotaOnoff === 2){
 		innerdisp.innerText = "no Fr";
 	} else if (rotaOnoff > 2 && rotaOnoff < 15){
-		console.log(rotaOnoff);
 		innerdisp.innerText = localStorage.getItem('ch'+(rotaOnoff-2)+'_mhz') + "." + formatKhz(localStorage.getItem('ch'+(rotaOnoff-2)+'_khz'));		
 	} else if (rotaOnoff == 15){
 		// todo check if temp is set
@@ -184,19 +183,31 @@ function handleStart(e){
 		onSpeak();
 		return;
 	}
-	tev.startX = tev.currentX = e.targetTouches[0].clientX;
-	tev.startY = tev.currentY = e.targetTouches[0].clientY;
+	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+		tev.startX = tev.currentX = e.clientX;
+		tev.startY = tev.currentY = e.clientY;
+	} else {
+		tev.startX = tev.currentX = e.targetTouches[0].clientX;
+		tev.startY = tev.currentY = e.targetTouches[0].clientY;
+	}
 }
 
 function handleMove(e){
+	e.preventDefault();
 	let direction = 1;
-	if(Math.abs(tev.currentY -  e.targetTouches[0].clientY) < 10){
+	let clientY;
+	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+		clientY = e.clientY;
+	} else {
+		clientY = e.targetTouches[0].clientY;
+	}
+	if(Math.abs(tev.currentY -  clientY) < 10){
 		return;
 	}
-	if(e.targetTouches[0].clientY-tev.currentY < 0){
+	if(clientY-tev.currentY < 0){
 		direction = -1;
 	}
-	tev.currentY = e.targetTouches[0].clientY;
+	tev.currentY = clientY;
 	if(e.target.id == "onoff"){
 		onOffMove(direction);
 	}
